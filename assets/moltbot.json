@@ -20,12 +20,20 @@
       "enabled": true,
       "botToken": "${TELEGRAM_BOT_TOKEN}",
       "dmPolicy": "pairing",
-      "groupPolicy": "allowlist"
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
     }
   },
   "gateway": {
+    "mode": "local",
     "port": 18789,
+    "bind": "lan",
+    "controlUi": {
+      "enabled": true,
+      "allowInsecureAuth": true
+    },
     "auth": {
+      "mode": "token",
       "token": "${GATEWAY_TOKEN}"
     }
   }
