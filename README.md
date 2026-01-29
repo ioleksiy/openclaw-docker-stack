@@ -52,7 +52,7 @@ Docker Compose project that deploys Moltbot behind a Cloudflare Tunnel for secur
    OPENAI_API_KEY=your_openai_api_key_here
    BRAVE_API_KEY=your_brave_api_key_here
    TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-   CLAWDBOT_GW_TOKEN=your_gateway_token_here
+   GATEWAY_TOKEN=your_gateway_token_here
    ```
 7. Click **Deploy the stack**
 
@@ -83,13 +83,13 @@ To deploy multiple instances from this repository:
    TUNNEL_TOKEN=token_for_prod
    ANTHROPIC_API_KEY=prod_anthropic_key
    TELEGRAM_BOT_TOKEN=prod_telegram_token
-   CLAWDBOT_GW_TOKEN=prod_gateway_token
+   GATEWAY_TOKEN=prod_gateway_token
    
    Stack Name: moltbot-development
    TUNNEL_TOKEN=token_for_dev
    ANTHROPIC_API_KEY=dev_anthropic_key
    TELEGRAM_BOT_TOKEN=dev_telegram_token
-   CLAWDBOT_GW_TOKEN=dev_gateway_token
+   GATEWAY_TOKEN=dev_gateway_token
    ```
 
 Portainer automatically ensures each deployment has:
@@ -116,7 +116,7 @@ Set these in the Portainer stack interface:
 - `OPENAI_API_KEY`: Your OpenAI API key
 - `BRAVE_API_KEY`: Your Brave Search API key
 - `TELEGRAM_BOT_TOKEN`: Your Telegram bot token
-- `CLAWDBOT_GW_TOKEN`: Gateway token for Moltbot
+- `GATEWAY_TOKEN`: Gateway token for Moltbot
 
 **Optional (with defaults):**
 - `NODE_ENV`: Node environment (default: `production`)

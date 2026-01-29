@@ -12,7 +12,7 @@
       "model": {
         "primary": "anthropic/claude-sonnet-4-5-20250929"
       },
-      "workspace": "${CLAWDBOT_WORKSPACE_DIR}"
+      "workspace": "${WORKSPACE_DIR}"
     }
   },
   "channels": {
@@ -26,7 +26,7 @@
   "gateway": {
     "port": 18789,
     "auth": {
-      "token": "${CLAWDBOT_GATEWAY_TOKEN}"
+      "token": "${GATEWAY_TOKEN}"
     }
   }
 }
