@@ -7,7 +7,7 @@ services:
       - -c
       - |
         chown -R node:node /home/node/
-        su-exec node sh -c '
+        su -s /bin/sh node -c '
           if [ ! -f "${MBOT_CONFIG_DIR}/moltbot.json" ]; then
             echo "moltbot.json not found, downloading from GitHub..."
             curl -fsSL -o "${MBOT_CONFIG_DIR}/moltbot.json" \
