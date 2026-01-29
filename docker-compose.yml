@@ -8,10 +8,9 @@ services:
       - |
         chown -R node:node /home/node/
         su -s /bin/sh node -c '
-          if [ ! -f "${MBOT_CONFIG_DIR}/moltbot.json" ]; then
+          if [ ! -f "/home/node/.clawdbot/moltbot.json" ]; then
             echo "moltbot.json not found, downloading from GitHub..."
-            echo "${MBOT_CONFIG_DIR}/moltbot.json"
-            curl -fsSL -o "${MBOT_CONFIG_DIR}/moltbot.json" \
+            curl -fsSL -o "/home/node/.clawdbot/moltbot.json" \
               https://raw.githubusercontent.com/ioleksiy/docker-moltbot-cloudflare/refs/heads/main/assets/moltbot.json
             echo "moltbot.json downloaded successfully"
           fi
@@ -27,7 +26,6 @@ services:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - GATEWAY_TOKEN=${GATEWAY_TOKEN}
       - WORKSPACE_DIR=/home/node/workspace-default
-      - MBOT_CONFIG_DIR=/home/node/.clawdbot # this is ignored by bot but needed for initial setup
     volumes:
       - mbot_config:/home/node/.clawdbot
       - mbot_workspace:/home/node/workspace-default
