@@ -1,17 +1,21 @@
 services:
   mbot:
     image: ioleksiy/moltbot-docker:latest
+    user: "0:0"
     command: 
       - /bin/sh
       - -c
       - |
-        if [ ! -f "${MBOT_CONFIG_DIR}/moltbot.json" ]; then
-          echo "moltbot.json not found, downloading from GitHub..."
-          curl -fsSL -o "${MBOT_CONFIG_DIR}/moltbot.json" \
-            https://raw.githubusercontent.com/ioleksiy/docker-moltbot-cloudflare/refs/heads/main/assets/moltbot.json
-          echo "moltbot.json downloaded successfully"
-        fi
-        exec moltbot gateway
+        chown -R node:node /home/node/
+        su-exec node sh -c '
+          if [ ! -f "${MBOT_CONFIG_DIR}/moltbot.json" ]; then
+            echo "moltbot.json not found, downloading from GitHub..."
+            curl -fsSL -o "${MBOT_CONFIG_DIR}/moltbot.json" \
+              https://raw.githubusercontent.com/ioleksiy/docker-moltbot-cloudflare/refs/heads/main/assets/moltbot.json
+            echo "moltbot.json downloaded successfully"
+          fi
+          exec moltbot gateway
+        '
     networks:
       - mbot_net
     environment:
@@ -23,7 +27,6 @@ services:
       - GATEWAY_TOKEN=${GATEWAY_TOKEN}
       - WORKSPACE_DIR=/home/node/workspace-default
       - MBOT_CONFIG_DIR=/home/node/.clawdbot # this is ignored by bot but needed for initial setup
-    user: "1000:1000"
     volumes:
       - mbot_config:/home/node/.clawdbot
       - mbot_workspace:/home/node/workspace-default
