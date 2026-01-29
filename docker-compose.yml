@@ -1,0 +1,44 @@
+services:
+  mbot:
+    image: ioleksiy/moltbot-docker:latest
+    command: ["moltbot", "gateway"]
+    networks:
+      - mbot_net
+    environment:
+      - NODE_ENV=production
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - BRAVE_API_KEY=${BRAVE_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - CLAWDBOT_GATEWAY_TOKEN=${CLAWDBOT_GW_TOKEN}
+      - CLAWDBOT_CONFIG_DIR=/home/node/.clawdbot # this is ignored by bot but needed for initial setup
+      - CLAWDBOT_WORKSPACE_DIR=/home/node/workspace-default
+    user: "1000:1000"
+    volumes:
+      - mbot_config:/home/node/.clawdbot
+      - mbot_workspace:/home/node/workspace-default
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - mbot_net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+
+networks:
+  mbot_net:
+    driver: overlay
+    attachable: true
+
+volumes:
+  mbot_config:
+  mbot_workspace:
