@@ -1,18 +1,25 @@
 services:
   mbot:
     image: ioleksiy/moltbot-docker:latest
-    user: "1000:1000"
+    user: "0:0"
     command: 
       - /bin/sh
       - -c
       - |
-        if [ ! -f "/home/node/.clawdbot/moltbot.json" ]; then
-          echo "moltbot.json not found, downloading from GitHub..."
-          curl -fsSL -o "/home/node/.clawdbot/moltbot.json" \
-            https://raw.githubusercontent.com/ioleksiy/docker-moltbot-cloudflare/refs/heads/main/assets/moltbot.json
-          echo "moltbot.json downloaded successfully"
-        fi
-        exec moltbot gateway
+        # fix ownership of the two named volumes
+        chown -R 1000:1000 /home/node
+
+        # download config as node user if missing
+        su node -s /bin/sh -c '
+          if [ ! -f "/home/node/.clawdbot/moltbot.json" ]; then
+            echo "moltbot.json not found, downloading from GitHub..."
+            curl -fsSL -o "/home/node/.clawdbot/moltbot.json" \
+              https://raw.githubusercontent.com/ioleksiy/docker-moltbot-cloudflare/refs/heads/main/assets/moltbot.json
+            echo "moltbot.json downloaded successfully"
+          fi
+
+          exec moltbot gateway
+        '
     networks:
       - mbot_net
     environment:
