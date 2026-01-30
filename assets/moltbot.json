@@ -15,6 +15,11 @@
       "workspace": "${WORKSPACE_DIR}"
     }
   },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true
+  },
   "channels": {
     "telegram": {
       "enabled": true,
