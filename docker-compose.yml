@@ -1,6 +1,6 @@
 services:
   mbot:
-    image: ioleksiy/moltbot-docker:latest
+    image: ghcr.io/ioleksiy/openclaw-docker:latest
     user: "0:0"
     command: 
       - /bin/sh
