@@ -11,9 +11,9 @@ services:
 
         # download config as node user if missing
         su node -s /bin/sh -c '
-          if [ ! -f "/home/node/.clawdbot/openclaw.json" ]; then
+          if [ ! -f "/home/node/.openclaw/openclaw.json" ]; then
             echo "openclaw.json not found, downloading from GitHub..."
-            curl -fsSL -o "/home/node/.clawdbot/openclaw.json" \
+            curl -fsSL -o "/home/node/.openclaw/openclaw.json" \
               https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw.json
             echo "openclaw.json downloaded successfully"
           fi
@@ -31,7 +31,7 @@ services:
       - GATEWAY_TOKEN=${GATEWAY_TOKEN}
       - WORKSPACE_DIR=/home/node/workspace-default
     volumes:
-      - config:/home/node/.clawdbot
+      - config:/home/node/.openclaw
       - main_workspace:/home/node/workspace-default
     deploy:
       replicas: 1
