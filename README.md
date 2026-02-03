@@ -1,12 +1,12 @@
-# docker-moltbot-cloudflare
+# openclaw-docker-stack
 
-Docker Compose project that deploys Moltbot behind a Cloudflare Tunnel for secure remote access without exposing ports on the host machine.
+Docker Compose project that deploys Openclaw behind a Cloudflare Tunnel for secure remote access without exposing ports on the host machine.
 
 ## Features
 
-- **Moltbot**: AI-powered Telegram bot with gateway functionality
+- **Openclaw**: AI-powered Telegram bot with gateway functionality
 - **Cloudflare Tunnel**: Secure access without port forwarding or firewall configuration
-- **Persistent Storage**: Moltbot config and workspace data persist across container restarts
+- **Persistent Storage**: Openclaw config and workspace data persist across container restarts
 - **Internal Network**: All services communicate through a private Docker network
 - **No Exposed Ports**: No direct IP/port access from the host machine
 
@@ -30,20 +30,20 @@ Docker Compose project that deploys Moltbot behind a Cloudflare Tunnel for secur
 2. Navigate to **Access** > **Tunnels**
 3. Click **Create a tunnel**
 4. Choose **Cloudflared** as the connector
-5. Give your tunnel a name (e.g., "moltbot-tunnel")
+5. Give your tunnel a name (e.g., "openclaw-tunnel")
 6. Copy the tunnel token that's generated
 7. Configure a public hostname:
-   - **Public hostname**: Your desired subdomain (e.g., `moltbot.yourdomain.com`)
+   - **Public hostname**: Your desired subdomain (e.g., `openclaw.yourdomain.com`)
    - **Service type**: HTTP
-   - **URL**: `mbot:8000` (the internal Docker service name and port - adjust if Moltbot uses a different port)
+   - **URL**: `mbot:8000` (the internal Docker service name and port - adjust if Openclaw uses a different port)
 
 ### 2. Deploy with Portainer
 
 1. In Portainer, go to **Stacks** > **Add stack**
-2. Give your stack a **unique name** (e.g., `moltbot-production`, `moltbot-dev`, `moltbot-test`)
+2. Give your stack a **unique name** (e.g., `openclaw-production`, `openclaw-dev`, `openclaw-test`)
    - This stack name will automatically prefix all volumes and networks
 3. Choose **Git Repository**
-4. Enter your repository URL: `https://github.com/ioleksiy/docker-moltbot-cloudflare`
+4. Enter your repository URL: `https://github.com/ioleksiy/openclaw-docker-stack`
 5. Set **Compose path** to: `docker-compose.yml`
 6. In the **Environment variables** section, add:
    ```
@@ -79,13 +79,13 @@ To deploy multiple instances from this repository:
 3. Each stack should have unique API keys and gateway tokens
 4. Examples:
    ```
-   Stack Name: moltbot-production
+   Stack Name: openclaw-production
    TUNNEL_TOKEN=token_for_prod
    ANTHROPIC_API_KEY=prod_anthropic_key
    TELEGRAM_BOT_TOKEN=prod_telegram_token
    GATEWAY_TOKEN=prod_gateway_token
    
-   Stack Name: moltbot-development
+   Stack Name: openclaw-development
    TUNNEL_TOKEN=token_for_dev
    ANTHROPIC_API_KEY=dev_anthropic_key
    TELEGRAM_BOT_TOKEN=dev_telegram_token
@@ -98,9 +98,9 @@ Portainer automatically ensures each deployment has:
 - Independent service instances
 - Complete isolation between deployments
 
-### 4. First Access to Moltbot
+### 4. First Access to Openclaw
 
-Once deployed, your Moltbot will be accessible through:
+Once deployed, your Openclaw will be accessible through:
 1. Your Telegram bot (using the configured bot token)
 2. Your Cloudflare Tunnel URL (if web interface is available)
 
@@ -116,7 +116,7 @@ Set these in the Portainer stack interface:
 - `OPENAI_API_KEY`: Your OpenAI API key
 - `BRAVE_API_KEY`: Your Brave Search API key
 - `TELEGRAM_BOT_TOKEN`: Your Telegram bot token
-- `GATEWAY_TOKEN`: Gateway token for Moltbot
+- `GATEWAY_TOKEN`: Gateway token for Openclaw
 
 **Optional (with defaults):**
 - `NODE_ENV`: Node environment (default: `production`)
@@ -124,8 +124,8 @@ Set these in the Portainer stack interface:
 ### Persistent Storage
 
 Data is stored in Docker volumes:
-- `mbot_config`: Moltbot configuration and credentials
-- `mbot_workspace`: Moltbot workspace files
+- `mbot_config`: Openclaw configuration and credentials
+- `mbot_workspace`: Openclaw workspace files
 
 This data persists even when containers are updated or reset.
 
@@ -134,7 +134,7 @@ This data persists even when containers are updated or reset.
 Each stack creates its own isolated overlay network (automatically prefixed by Portainer) configured with:
 - No ports exposed to the host
 - Internal communication between services within the same stack
-- Outbound internet access allowed (for Moltbot to connect to external services)
+- Outbound internet access allowed (for Openclaw to connect to external services)
 - Complete isolation between different stack deployments
 - Swarm-scoped networking for service discovery
 
@@ -152,14 +152,14 @@ docker service logs <stack_name>_cloudflared
 
 ### Scale services
 ```bash
-# Moltbot should stay at 1 replica for stateful operations
+# Openclaw should stay at 1 replica for stateful operations
 docker service scale <stack_name>_mbot=1
 ```
 
 ### Update services
 ```bash
 # Update to latest images
-docker service update --image ioleksiy/moltbot-docker:latest <stack_name>_mbot
+docker service update --image ioleksiy/openclaw-docker:latest <stack_name>_mbot
 docker service update --image cloudflare/cloudflared:latest <stack_name>_cloudflared
 ```
 

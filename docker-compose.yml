@@ -1,5 +1,5 @@
 services:
-  mbot:
+  bot:
     image: ghcr.io/ioleksiy/openclaw-docker:latest
     user: "0:0"
     command: 
@@ -11,17 +11,17 @@ services:
 
         # download config as node user if missing
         su node -s /bin/sh -c '
-          if [ ! -f "/home/node/.clawdbot/moltbot.json" ]; then
-            echo "moltbot.json not found, downloading from GitHub..."
-            curl -fsSL -o "/home/node/.clawdbot/moltbot.json" \
-              https://raw.githubusercontent.com/ioleksiy/docker-moltbot-cloudflare/refs/heads/main/assets/moltbot.json
-            echo "moltbot.json downloaded successfully"
+          if [ ! -f "/home/node/.clawdbot/openclaw.json" ]; then
+            echo "openclaw.json not found, downloading from GitHub..."
+            curl -fsSL -o "/home/node/.clawdbot/openclaw.json" \
+              https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw.json
+            echo "openclaw.json downloaded successfully"
           fi
 
-          exec moltbot gateway
+          exec openclaw gateway
         '
     networks:
-      - mbot_net
+      - bot_network
     environment:
       - NODE_ENV=production
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
@@ -31,8 +31,8 @@ services:
       - GATEWAY_TOKEN=${GATEWAY_TOKEN}
       - WORKSPACE_DIR=/home/node/workspace-default
     volumes:
-      - mbot_config:/home/node/.clawdbot
-      - mbot_workspace:/home/node/workspace-default
+      - config:/home/node/.clawdbot
+      - main_workspace:/home/node/workspace-default
     deploy:
       replicas: 1
       restart_policy:
@@ -44,17 +44,17 @@ services:
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     networks:
-      - mbot_net
+      - bot_network
     deploy:
       replicas: 1
       restart_policy:
         condition: any
 
 networks:
-  mbot_net:
+  bot_network:
     driver: overlay
     attachable: true
 
 volumes:
-  mbot_config:
-  mbot_workspace:
+  config:
+  main_workspace:
