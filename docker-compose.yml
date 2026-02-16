@@ -18,7 +18,8 @@ services:
             echo "openclaw.json downloaded successfully"
           fi
 
-          cd "/home/node/clawd"
+          RUN ln -s /home/node/workspace-default /home/node/clawd
+
           exec openclaw gateway
         '
     networks:
@@ -30,10 +31,10 @@ services:
       - BRAVE_API_KEY=${BRAVE_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - GATEWAY_TOKEN=${GATEWAY_TOKEN}
-      - WORKSPACE_DIR=/home/node/clawd
+      - WORKSPACE_DIR=/home/node/workspace-default
     volumes:
       - config:/home/node/.openclaw
-      - main_workspace:/home/node/clawd
+      - main_workspace:/home/node/workspace-default
     deploy:
       replicas: 1
       restart_policy:
