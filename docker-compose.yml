@@ -18,6 +18,7 @@ services:
             echo "openclaw.json downloaded successfully"
           fi
 
+          cd "$WORKSPACE_DIR"
           exec openclaw gateway
         '
     networks:
