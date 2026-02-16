@@ -29,10 +29,10 @@ services:
       - BRAVE_API_KEY=${BRAVE_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - GATEWAY_TOKEN=${GATEWAY_TOKEN}
-      - WORKSPACE_DIR=/home/node/workspace-default
+      - WORKSPACE_DIR=/home/node/clawd
     volumes:
       - config:/home/node/.openclaw
-      - main_workspace:/home/node/workspace-default
+      - main_workspace:/home/node/clawd
     deploy:
       replicas: 1
       restart_policy:
