@@ -8,6 +8,7 @@ services:
       - |
         # fix ownership of the two named volumes
         chown -R 1000:1000 /home/node
+        ln -s /home/node/workspace-default /home/node/clawd
 
         # download config as node user if missing
         su node -s /bin/sh -c '
@@ -17,8 +18,6 @@ services:
               https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw.json
             echo "openclaw.json downloaded successfully"
           fi
-
-          RUN ln -s /home/node/workspace-default /home/node/clawd
 
           exec openclaw gateway
         '
