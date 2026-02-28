@@ -1,6 +1,11 @@
 # openclaw-docker-stack
 
-Docker Compose project that deploys Openclaw behind a Cloudflare Tunnel for secure remote access without exposing ports on the host machine.
+Docker Compose project for running Openclaw with optional Cloudflare Tunnel support.
+
+## Compose Variants
+
+- `docker-compose.yml`: Default stack without Cloudflare Tunnel
+- `docker-compose-cloudflare.yml`: Cloudflare Tunnel-enabled stack
 
 ## Features
 
@@ -44,7 +49,7 @@ Docker Compose project that deploys Openclaw behind a Cloudflare Tunnel for secu
    - This stack name will automatically prefix all volumes and networks
 3. Choose **Git Repository**
 4. Enter your repository URL: `https://github.com/ioleksiy/openclaw-docker-stack`
-5. Set **Compose path** to: `docker-compose.yml`
+5. Set **Compose path** to: `docker-compose-cloudflare.yml`
 6. In the **Environment variables** section, add:
    ```
    TUNNEL_TOKEN=your_actual_tunnel_token_here
@@ -111,7 +116,6 @@ Once deployed, your Openclaw will be accessible through:
 Set these in the Portainer stack interface:
 
 **Required:**
-- `TUNNEL_TOKEN`: Your Cloudflare Tunnel token
 - `ANTHROPIC_API_KEY`: Your Anthropic (Claude) API key
 - `OPENAI_API_KEY`: Your OpenAI API key
 - `BRAVE_API_KEY`: Your Brave Search API key
@@ -119,6 +123,7 @@ Set these in the Portainer stack interface:
 - `GATEWAY_TOKEN`: Gateway token for Openclaw
 
 **Optional (with defaults):**
+- `TUNNEL_TOKEN`: Cloudflare Tunnel token (required only with `docker-compose-cloudflare.yml`)
 - `NODE_ENV`: Node environment (default: `production`)
 
 ### Persistent Storage

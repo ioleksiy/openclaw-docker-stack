@@ -40,6 +40,18 @@ services:
       restart_policy:
         condition: any
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - bot_network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+
 networks:
   bot_network:
     driver: overlay
