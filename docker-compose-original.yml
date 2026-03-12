@@ -3,7 +3,7 @@ services:
     image: ghcr.io/openclaw/openclaw:latest
     restart: unless-stopped
     environment:
-      - HOME: /home/node
+      - HOME=/home/node
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_OWNER_ID=${TELEGRAM_OWNER_ID}
