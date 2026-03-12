@@ -1,5 +1,6 @@
 services:
   ocbot:
+    user: root
     image: ghcr.io/openclaw/openclaw:latest
     restart: unless-stopped
     environment:
@@ -11,9 +12,9 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
-        curl -fsSL https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw-original.json \
-          | envsubst > /home/node/.openclaw/openclaw.json
-        exec node dist/index.js gateway --bind lan --port 18789
+        chown -R node:node /home/node/.openclaw
+        su node -c curl -fsSL https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw-original.json \
+          | envsubst > /home/node/.openclaw/openclaw.json && exec node dist/index.js gateway --bind lan --port 18789
     volumes:
       - oc-config:/home/node/.openclaw
       - oc-workspace:/home/node/.openclaw/workspace
