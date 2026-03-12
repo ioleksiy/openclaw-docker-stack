@@ -13,7 +13,9 @@ services:
     command:
       - |
         chown -R node:node /home/node/.openclaw
-        printf '{"gateway":{"mode":"local"},"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+        if [ ! -f /home/node/.openclaw/openclaw.json ]; then
+          printf '{"gateway":{"mode":"local"},"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+        fi
         exec setpriv --reuid=node --regid=node --init-groups -- node dist/index.js gateway
     volumes:
       - oc-config:/home/node/.openclaw
