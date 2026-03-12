@@ -7,7 +7,7 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_OWNER_ID=${TELEGRAM_OWNER_ID}
-      - OPENCLAW_CONFIG_PATH: /home/node/.openclaw/openclaw.json
+      - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
