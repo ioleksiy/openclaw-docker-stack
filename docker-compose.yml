@@ -15,7 +15,7 @@ services:
         su node -s /bin/sh -c '
           if [ ! -f "/home/node/.openclaw/openclaw.json" ]; then
             echo "openclaw.json not found, downloading from GitHub..."
-            curl -fsSL -o "/home/node/.openclaw/openclaw.json" \
+            curl -fsSL -H "Cache-Control: no-cache" -H "Pragma: no-cache" -o "/home/node/.openclaw/openclaw.json" \
               https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw.json
             echo "openclaw.json downloaded successfully"
           fi
