@@ -12,9 +12,10 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
+        apk add --no-cache su-exec > /dev/null 2>&1
         chown -R node:node /home/node/.openclaw
-        su node -c curl -fsSL https://raw.githubusercontent.com/ioleksiy/openclaw-docker-stack/refs/heads/main/assets/openclaw-original.json \
-          | envsubst > /home/node/.openclaw/openclaw.json && exec node dist/index.js gateway --bind lan --port 18789
+        printf '{"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":["%s"]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+        exec su-exec node node dist/index.js gateway --bind lan --port 18789
     volumes:
       - oc-config:/home/node/.openclaw
       - oc-workspace:/home/node/.openclaw/workspace
