@@ -1,0 +1,9 @@
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": ["${TELEGRAM_OWNER_ID}"]
+    }
+  }
+}
