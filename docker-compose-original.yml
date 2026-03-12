@@ -13,7 +13,7 @@ services:
     command:
       - |
         chown -R node:node /home/node/.openclaw
-        printf '{"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+        printf '{"gateway":{"mode":"local"},"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
         exec setpriv --reuid=node --regid=node --init-groups -- node dist/index.js gateway --bind lan --port 18789
     volumes:
       - oc-config:/home/node/.openclaw
