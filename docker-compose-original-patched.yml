@@ -1,0 +1,26 @@
+services:
+  ocbot:
+    user: root
+    image: ghcr.io/ioleksiy/openclaw-dckr:latest
+    restart: unless-stopped
+    environment:
+      - HOME=/home/node
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_OWNER_ID=${TELEGRAM_OWNER_ID}
+      - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        chown -R node:node /home/node/.openclaw
+        if [ ! -f /home/node/.openclaw/openclaw.json ]; then
+          printf '{"gateway":{"mode":"local"},"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+        fi
+        exec setpriv --reuid=node --regid=node --init-groups -- node dist/index.js gateway
+    volumes:
+      - oc-config:/home/node/.openclaw
+      - oc-workspace:/home/node/.openclaw/workspace
+
+volumes:
+  oc-config:
+  oc-workspace:
