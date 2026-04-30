@@ -19,7 +19,7 @@ services:
         exec setpriv --reuid=node --regid=node --init-groups -- node dist/index.js gateway
     volumes:
       - oc-config:/home/node/.openclaw
-      - oc-workspace:/home/node/.openclaw/workspace
+      - oc-workspace:/home/node/workspace-default
 
 volumes:
   oc-config:
