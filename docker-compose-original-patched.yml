@@ -11,6 +11,7 @@ services:
       - TELEGRAM_OWNER_ID=${TELEGRAM_OWNER_ID}
       - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
       - OP_SERVICE_ACCOUNT_TOKEN=${OP_SERVICE_ACCOUNT_TOKEN:-}
+      - OPENCLAW_GATEWAY_TOKEN=1234567890qwertyuiopasdfghjkl
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
