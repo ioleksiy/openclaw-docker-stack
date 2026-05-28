@@ -1,6 +1,6 @@
 services:
   bot:
-    image: ghcr.io/ioleksiy/openclaw-docker:latest
+    image: ghcr.io/ioleksiy/openclaw-docker:v2026.4.5
     restart: unless-stopped
     user: "0:0"
     command: 
