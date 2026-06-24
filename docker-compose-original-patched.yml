@@ -1,7 +1,7 @@
 services:
   ocbot:
     user: root
-    image: ghcr.io/ioleksiy/openclaw-dckr:v2026.6.9
+    image: ghcr.io/ioleksiy/openclaw-dckr:v2026.6.10
     restart: unless-stopped
     environment:
       - HOME=/home/node
