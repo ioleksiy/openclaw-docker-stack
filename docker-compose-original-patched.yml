@@ -13,6 +13,7 @@ services:
       - OP_SERVICE_ACCOUNT_TOKEN=${OP_SERVICE_ACCOUNT_TOKEN:-}
       - OPENCLAW_GATEWAY_TOKEN=1234567890qwertyuiopasdfghjkl
     entrypoint: ["/bin/sh", "-c"]
+    working_dir: /home/node/workspace-default
     command:
       - |
         chown -R node:node /home/node/.openclaw
