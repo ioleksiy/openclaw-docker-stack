@@ -13,6 +13,8 @@ services:
       - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
       - OPENCLAW_GATEWAY_TOKEN=1234567890qwertyuiopasdfghjkl
       - OPENCLAW_WORKSPACE_DIR=${OPENCLAW_WORKSPACE_DIR:-/home/node/workspace-default}
+      - GATEWAY_TOKEN=1234567890qwertyuiopasdfghjkl
+      - WORKSPACE_DIR=${OPENCLAW_WORKSPACE_DIR:-/home/node/workspace-default}
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
