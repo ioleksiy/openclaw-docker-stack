@@ -18,7 +18,11 @@ services:
       - |
         chown -R node:node /home/node/.openclaw
         if [ ! -f /home/node/.openclaw/openclaw.json ]; then
-          printf '{"gateway":{"mode":"local"},"agents":{"defaults":{"model":{"primary":"anthropic/claude-sonnet-4-6"}}},"channels":{"telegram":{"enabled":true,"dmPolicy":"allowlist","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+          if [ -n "$TELEGRAM_OWNER_ID" ]; then
+            printf '{"gateway":{"mode":"local"},"agents":{"defaults":{"model":{"primary":"anthropic/claude-sonnet-4-6"}}},"channels":{"telegram":{"enabled":true,"dmPolicy":"pairing","allowFrom":[%s]}}}\n' "$TELEGRAM_OWNER_ID" > /home/node/.openclaw/openclaw.json
+          else
+            printf '{"gateway":{"mode":"local"},"agents":{"defaults":{"model":{"primary":"anthropic/claude-sonnet-4-6"}}},"channels":{"telegram":{"enabled":true,"dmPolicy":"pairing"}}}\n' > /home/node/.openclaw/openclaw.json
+          fi
         fi
         exec setpriv --reuid=node --regid=node --init-groups -- node dist/index.js gateway
     volumes:
