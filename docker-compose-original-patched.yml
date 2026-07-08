@@ -6,11 +6,11 @@ services:
     environment:
       - HOME=/home/node
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - TELEGRAM_OWNER_ID=${TELEGRAM_OWNER_ID}
-      - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
+      - TELEGRAM_OWNER_ID=${TELEGRAM_OWNER_ID:-}
       - OP_SERVICE_ACCOUNT_TOKEN=${OP_SERVICE_ACCOUNT_TOKEN:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
       - OPENCLAW_GATEWAY_TOKEN=1234567890qwertyuiopasdfghjkl
       - OPENCLAW_WORKSPACE_DIR=${OPENCLAW_WORKSPACE_DIR:-/home/node/workspace-default}
     entrypoint: ["/bin/sh", "-c"]
